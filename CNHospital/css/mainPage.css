@@ -1,0 +1,61 @@
+/* 设置主页面背景 */
+body{
+    background-image: url(../img/mainPageBg.jpg);
+    background-size: cover;
+}
+
+/* 设置左上角的两行字 */
+#inUpperLeft{
+    display: inline;
+    float: left;
+    width: 30%;
+    margin-top: 30px;
+
+}
+#data_share_center,#cn_hospital_sys{
+    font-weight: bold;
+    text-align: center;
+    font-size: 30px;
+}
+#cn_hospital_sys{
+    margin-top: 5px;
+}
+
+/* 设置右上角的两个按钮 */
+#inUpperRight{
+    display: flex;
+    position: relative;
+    float: right;
+    font-size: 25px;
+    margin-top: 30px;
+    font-weight: bold;
+    width: 25%;
+    height: 100px;
+}
+#public_sys{
+    border: 2px solid black;
+    position: absolute;
+    line-height: 100px;
+    width: 35%;
+    text-align: center;
+    border-radius: 20px;
+    color: white;
+    background-color: black;
+}
+#public_sys:hover{
+    transform: scale(1.1);
+}
+#private_sys{
+    border: 2px solid black;
+    position: absolute;
+    margin-left: 45%;
+    line-height: 100px;
+    width: 35%;
+    text-align: center;
+    border-radius: 20px;
+    color: white;
+    background-color: black;
+}
+#private_sys:hover{
+    transform: scale(1.1);
+}

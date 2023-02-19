@@ -1,0 +1,84 @@
+.inLeft{
+    overflow: auto;
+    width: 15%;
+    height: 400px;
+    margin-top: 10%;
+    /* border: 2px solid black; */
+    float: left;
+}
+.inRight{
+    overflow: auto;
+    width: 83%;
+    height: 700px;
+    border: 1px solid gray;
+}
+#inLeftCenter{
+    height: auto;
+    /* margin-top: 25%; */
+    /* border: 2px solid red; */
+    width: auto;
+    overflow: auto;
+}
+
+/* 设置左侧每一个选项的样式 */
+.fun_choice{
+    width: auto;
+    height: 45px;
+    /* border: 2px solid blueviolet; */
+    text-align: center;
+    font-size: large;
+    /* padding-top: 9.5%; */
+    font-weight: bold;
+    line-height: 45px;
+}
+#hosInfo{
+    background-image: url(../img/privChoiceBG.jpg);
+    background-size: cover;
+    color: white;
+    font-weight: bolder;
+}
+
+.fun_choice:hover{
+    color: white;
+    font-weight: bolder;
+    background-color: #012060;
+}
+
+
+/* 设置右侧 */
+.inRight{
+    box-shadow: 10px 10px 5px #888888;
+}
+/* 右上 */
+#inRightUpper{
+    width: auto;
+    height: 63px;
+    /* border: 2px solid salmon; */
+    background-color: #355896;
+    line-height: 63px;
+    text-align: right;
+    color: white;
+    font-size: larger;
+    font-weight: bolder;
+}
+#RU_text{
+    /* border: 2px solid sandybrown; */
+    /* width: fit-content; */
+    height: 63px;
+    margin-right: 10%;
+}
+
+
+#hosInfo_title_div{
+    margin-left: 5%;
+}
+
+
+#hosInfo_text{
+    /* border: 2px solid blue; */
+    width: 85%;
+    margin-left: 5%;
+    margin-top: 3%;
+    font-size: larger;
+    text-indent: 2em;
+}

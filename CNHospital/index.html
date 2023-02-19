@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>智慧中医院</title>
+		<link type="text/css" rel="stylesheet" href="./css/mainPage.css">
+		<script type="text/javascript" src="./js/mainPage.js"></script>
+		<!-- <script type="text/javascript">
+			var system = {};
+			var p = navigator.platform;
+			system.win = p.indexOf("Win") == 0;
+			system.mac = p.indexOf("Mac") == 0;
+			system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
+			if (system.win || system.mac || system.xll) {
+				//如果是电脑跳转到
+			   window.location.href = "./index.html";
+			} else {  
+			  alert("请使用电脑进入本网页以达到最好效果！")
+			  window.opener=null;
+			  window.close();
+			}
+		  </script> -->
+	</head>
+	<body>
+		<!-- 左上角两行字 -->
+		<div id="inUpperLeft">
+			<div id="data_share_center">中医药数据共享中心</div>
+			<div id="cn_hospital_sys">基层中医院智慧管理系统</div>
+		</div>
+
+		<!-- 右上角两个按钮 -->
+		<div id="inUpperRight">
+			<div id="public_sys" onclick="window.location.href='./publicSys.html'">公共系统</div>
+			<div id="private_sys" onclick="window.location.href='./privateSys.html'">私用系统</div>
+		</div>
+	</body>
+</html>

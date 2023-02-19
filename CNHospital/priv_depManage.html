@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>部门管理</title>
+    <link type="text/css" rel="stylesheet" href="./css/priv_depManage.css">
+</head>
+<body>
+    <div class="inLeft">
+        <div id="inLeftCenter">
+            <div class="fun_choice" id="hosInfo" onclick="window.location.href='./priv_hosInfo.html'">医院概况</div>
+            <div class="fun_choice" id="peoManage" onclick="window.location.href='./priv_peoManage.html'">人员管理</div>
+            <div class="fun_choice" id="depManage" onclick="window.location.href='./priv_depManage.html'">部门管理</div>
+            <div class="fun_choice" id="outPatitManage" onclick="window.location.href='./priv_outPatitManage.html'">门诊管理</div>
+            <div class="fun_choice" id="phayManage" onclick="window.location.href='./priv_phayManage.html'">药房管理</div>
+            <div class="fun_choice" id="eCaseHis" onclick="window.location.href='./priv_eCaseHis.html'">电子病历</div>
+            <div class="fun_choice" id="inherit" onclick="window.location.href='./priv_inherit.html'">名老中医传承</div>
+            <div class="fun_choice" id="eAssisstance" onclick="window.location.href='./priv_eAssisstance.html'">智能辅助诊疗</div>
+            <div class="fun_choice" id="bgManage" onclick="window.location.href='./priv_bgManage.html'">后台管理</div>
+        </div>
+    </div>
+    <div class="inRight">
+        <div id="inRightUpper">
+            <div id="RU_text">线上智慧管理系统</div>
+        </div>
+        <div id="inRightBottom">
+            <div id="Info_title_div"><h2 id="Info_title">医院部门</h2></div>
+            <hr>
+            <div id="Info_text">
+                <div id="show_staff_all_div">
+                    <div id="all_depName_div">
+                        <!-- <div class="dep_name" id="dep_1">骨科</div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="./js/utilData.js"></script>
+    <script>
+       var depName_set = getDepName();
+    //    console.log(depName_set);
+       var i = 1;
+       for(let name of depName_set){
+            var new_dep_name_div = document.createElement("div");
+            new_dep_name_div.className = "dep_name";
+            new_dep_name_div.id = "dep_"+i;
+            var dep_name_textNode = document.createTextNode(name);
+            new_dep_name_div.appendChild(dep_name_textNode);
+            new_dep_name_div.addEventListener("click",function(){
+                loadDepDetail(name.toString());
+            })
+            var depName_parent_div = document.getElementById("all_depName_div");
+            depName_parent_div.appendChild(new_dep_name_div);
+            i++;
+        }
+        function loadDepDetail(depName){
+            // alert(depName+"点击成功！");
+            // 获取到指定科室的人员职位和姓名
+            var speDepStaff_map = getSpeDepStaff(depName);
+             var staff_photoSrc_arr = staffPhoto();
+            
+            // 修改页面内容
+            var info_title_div = document.getElementById("Info_title");
+            info_title_div.innerHTML = depName.toString()+"人员管理";
+            var need_to_delete = document.getElementById("show_staff_all_div")
+            if(need_to_delete) need_to_delete.remove();
+
+
+            var new_show_staff_all_div = document.createElement("div");
+            new_show_staff_all_div.id="show_staff_all_div";
+            var show_all_parent = document.getElementById("Info_text");
+            show_all_parent.appendChild(new_show_staff_all_div);
+            var i = 1;
+            for (var [key, value] of speDepStaff_map) {
+                // 获取所有人员的信息并添加div到页面中
+                var new_staff_info_div = document.createElement("div");
+                new_staff_info_div.id = "staff_info_div"+i;
+                new_staff_info_div.className = "staff_info_div";
+                var parent_div = document.getElementById('show_staff_all_div');
+                parent_div.appendChild(new_staff_info_div);
+
+                // 添加证件照
+                var new_photo_div = document.createElement("div");
+                new_photo_div.id = "staff_photo"+i;
+                new_photo_div.className = "staff_photo";
+                new_photo_div.style.backgroundImage = "url("+staff_photoSrc_arr[i-1]+")";
+                var photo_parent_div = document.getElementById("staff_info_div"+i);
+                photo_parent_div.appendChild(new_photo_div);
+
+                // 添加职位信息
+                var new_staff_job_div = document.createElement("div");
+                new_staff_job_div.className = "staff_job";
+                var job_text = value;
+                var job_textNode = document.createTextNode(value+"");
+                new_staff_job_div.appendChild(job_textNode);
+                var job_parent_div = document.getElementById("staff_info_div"+i);
+                job_parent_div.appendChild(new_staff_job_div);
+            
+                // 添加姓名
+                var new_staff_name_div = document.createElement("div");
+                new_staff_name_div.className = "staff_name";
+                var name_text = key;
+                var name_textNode = document.createTextNode(key+"");
+                new_staff_name_div.appendChild(name_textNode);
+                var name_parent_div = document.getElementById("staff_info_div"+i);
+                name_parent_div.appendChild(new_staff_name_div);
+            
+                // console.log(key + ' : ' + value);
+                i++;
+            }
+            
+
+            // console.log(getSpeDepStaff(depName));
+            
+        }
+    </script>
+</html>

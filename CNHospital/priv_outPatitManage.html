@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>门诊管理</title>
+    <link type="text/css" rel="stylesheet" href="./css/priv_outPatitManage.css">
+</head>
+<body>
+    <div class="inLeft">
+        <div id="inLeftCenter">
+            <div class="fun_choice" id="hosInfo" onclick="window.location.href='./priv_hosInfo.html'">医院概况</div>
+            <div class="fun_choice" id="peoManage" onclick="window.location.href='./priv_peoManage.html'">人员管理</div>
+            <div class="fun_choice" id="depManage" onclick="window.location.href='./priv_depManage.html'">部门管理</div>
+            <div class="fun_choice" id="outPatitManage" onclick="window.location.href='./priv_outPatitManage.html'">门诊管理</div>
+            <div class="fun_choice" id="phayManage" onclick="window.location.href='./priv_phayManage.html'">药房管理</div>
+            <div class="fun_choice" id="eCaseHis" onclick="window.location.href='./priv_eCaseHis.html'">电子病历</div>
+            <div class="fun_choice" id="inherit" onclick="window.location.href='./priv_inherit.html'">名老中医传承</div>
+            <div class="fun_choice" id="eAssisstance" onclick="window.location.href='./priv_eAssisstance.html'">智能辅助诊疗</div>
+            <div class="fun_choice" id="bgManage" onclick="window.location.href='./priv_bgManage.html'">后台管理</div>
+        </div>
+    </div>
+    <div class="inRight">
+        <div id="inRightUpper">
+            <div id="RU_text">线上智慧管理系统</div>
+        </div>
+        <div id="inRightBottom">
+            <div id="Info_title_div"><h2 id="Info_title">门诊管理</h2></div>
+            <hr>
+            <div id="Info_text">
+                <div class="FunChoice_R" id="OnlineBooking">预约挂号</div>
+                <div class="FunChoice_R" id="PatientInfo">病人信息</div>
+                <div class="FunChoice_R" id="WardManage">病房管理</div>
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="./js/utilData.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>    <!-- 添加点击事件 -->
+    <script>
+       var clk_online_book = document.getElementById("OnlineBooking");
+       clk_online_book.addEventListener("click",function(){
+        // window.location.href='./onLineBookPage.html';
+        // 删除已有元素
+        var need_to_delete = document.getElementById("Info_text");
+        while(need_to_delete.children.length){
+            need_to_delete.lastElementChild.remove();
+        }
+
+        var change_title = document.getElementById('Info_title');
+        change_title.innerHTML = "预约挂号";
+        // 挂号单号
+        var booking_num = document.createElement("div");
+        booking_num.id = "booking_num";
+        booking_num.className = "class_of_choice"
+        booking_num.innerHTML = "挂号单号</br>";
+        
+        var booking_num_input = document.createElement("input");
+        booking_num_input.id = "BookingNumInput";
+        booking_num_input.setAttribute("readOnly", true);
+        booking_num_input.value = getTimeNum();
+        var booking_num_input_parent = document.getElementById("booking_num");
+        booking_num.appendChild(booking_num_input);
+        
+
+        // 科室选择
+        var dep_choose = document.createElement("div");
+        dep_choose.id = "depChoose";
+        dep_choose.className = "class_of_choice";
+        dep_choose.innerHTML = "科室<span><font color ='#FF0000'>*</font></span><br>"
+
+        var dep_choose_option = document.createElement("select");
+        dep_choose_option.id = "DepChooseOption";
+        
+        dep_choose_option.length = 1;
+        
+        var depName_set = getDepName();
+        for(let name of depName_set){
+            var optionElement=document.createElement("option");//创建option元素
+            optionElement.setAttribute("value",name);
+            optionElement.appendChild(document.createTextNode(name));
+            dep_choose_option.appendChild(optionElement);
+        }
+        
+        
+        dep_choose.appendChild(dep_choose_option);
+        
+
+        
+        // 接诊类型
+        var reception_type = document.createElement("div");
+        reception_type.id = "ReceptionType";
+        reception_type.className = "class_of_choice";
+        reception_type.innerHTML = "接诊类型<span><font color ='#FF0000'>*</font></span><br>";
+
+        var reception_type_select = document.createElement("select");
+        reception_type_select.id = "ReceptionTypeSelect";
+        reception_type_select.length = 1;
+        reception_type.appendChild(reception_type_select);
+
+        var reception_type_option = document.createElement("option");
+        reception_type_option.setAttribute("value","初诊");
+        reception_type_option.appendChild(document.createTextNode("初诊"));
+        reception_type_select.appendChild(reception_type_option);
+        
+        var reception_type_option = document.createElement("option");
+        reception_type_option.setAttribute("value","复诊");
+        reception_type_option.appendChild(document.createTextNode("复诊"));
+        reception_type_select.appendChild(reception_type_option);
+        
+        
+        // 接诊医生
+        var reception_doctor = document.createElement("div");
+        reception_doctor.id = "ReceptionDoctor";
+        reception_doctor.className = "class_of_choice";
+        reception_doctor.innerHTML = "接诊医生<span><font color ='#FF0000'>*</font></span><br>";
+        
+        var reception_doctor_select = document.createElement("select");
+        reception_doctor_select.id = "ReceptionDoctorSelect";
+        reception_doctor_select.length = 1;
+        
+        var option_Element=document.createElement("option");//创建option元素
+        
+        reception_doctor.appendChild(reception_doctor_select);
+        
+        // 获取接诊科室的名字
+        dep_choose_option.addEventListener('change', function() {
+        var doc_need_to_delete = document.getElementById("ReceptionDoctorSelect");
+        while(doc_need_to_delete.children.length){
+            doc_need_to_delete.lastElementChild.remove();
+        }
+        // 获取选中项的内容
+        let selectedOption = dep_choose_option.options[dep_choose_option.selectedIndex].text;
+        let doctor_map = getSpeDepStaff(selectedOption);
+        for(var [key, value] of doctor_map){
+            var doc_name_option=document.createElement("option");//创建option元素
+            doc_name_option.setAttribute("value",key);
+            doc_name_option.appendChild(document.createTextNode(key));
+            reception_doctor_select.appendChild(doc_name_option);
+        }
+        console.log(selectedOption);
+        });
+        
+        
+
+        // 诊疗费
+        var trade_fee = document.createElement("div");
+        trade_fee.id = "TradeFee";
+        trade_fee.classList = "class_of_choice";
+        trade_fee.innerHTML = "诊疗费<span><font color ='#FF0000'>*</font></span><br>"
+
+        var trade_fee_select = document.createElement("select");
+        trade_fee_select.id = "TradeFeeSelect";
+        trade_fee_select.length = 1;
+
+        var trade_fee_option = document.createElement("option");
+        trade_fee_option.setAttribute("value","免诊疗费(0.00元)");
+        trade_fee_option.appendChild(document.createTextNode("免诊疗费(0.00元)"));
+        trade_fee_select.appendChild(trade_fee_option);
+
+        var trade_fee_option = document.createElement("option");
+        trade_fee_option.setAttribute("value","诊疗费(50.00元)");
+        trade_fee_option.appendChild(document.createTextNode("诊疗费(50.00元)"));
+        trade_fee_select.appendChild(trade_fee_option);
+
+        trade_fee.appendChild(trade_fee_select);
+        
+
+        // 挂号日期
+        var book_date = document.createElement("div");
+        book_date.id = "BookDate";
+        book_date.className = "class_of_choice";
+        book_date.innerHTML = "挂号日期<br>";
+        var book_date_input = document.createElement("input");
+        book_date_input.id = "BookDateInput";
+        book_date_input.setAttribute("readOnly", true);
+        book_date_input.value = getNowTime();
+        book_date.appendChild(book_date_input);
+
+
+        // 患者姓名
+        var patient_name = document.createElement("div");
+        patient_name.id = "PatientName";
+        patient_name.className = "class_of_choice";
+        patient_name.innerHTML = "患者姓名<span><font color ='#FF0000'>*</font></span><br>";
+        var patient_name_input = document.createElement("input");
+        patient_name_input.id = "PatientNameInput";
+        patient_name.appendChild(patient_name_input);
+
+
+        // 患者出生日期
+        var patient_birth = document.createElement("div");
+        patient_birth.id = "PatientBirth";
+        patient_birth.className = "class_of_choice";
+        patient_birth.innerHTML = "出生日期<span><font color ='#FF0000'>*</font></span><br>";
+        var patient_birth_date = document.createElement("input");
+        patient_birth_date.id = "PatientBirthDate";
+        patient_birth.appendChild(patient_birth_date);
+        // 获取日期值，用.value
+        
+
+        // // 患者年龄
+        // var patient_age = document.createElement("div");
+        // patient_age.id = "PatientAge";
+        // patient_age.className = "class_of_choice";
+        // patient_age.innerHTML = "年龄<br>";
+        // var patient_age_input = document.createElement("input");
+        // patient_age_input.id = "PatientAgeInput";
+        // patient_age_input.setAttribute("readOnly",true);
+        
+        // patient_age.appendChild(patient_age_input);
+
+
+        // 患者电话
+        var patient_phone = document.createElement("div");
+        patient_phone.id = "PatientPhone";
+        patient_phone.className = "class_of_choice";
+        patient_phone.innerHTML = "患者电话<span><font color ='#FF0000'>*</font></span><br>";
+        var patient_phone_input = document.createElement("input");
+        patient_phone_input.id = "PatientPhoneInput";
+        
+        patient_phone.appendChild(patient_phone_input);
+        
+        
+
+        // 提交按钮
+        var submit_btn = document.createElement("div");
+        submit_btn.id = "SubmitBtn";
+        submit_btn.innerHTML = "收费";
+        var sub_parent_div = document.getElementById("inRightBottom");
+        sub_parent_div.appendChild(submit_btn);
+        document.getElementById('SubmitBtn').addEventListener('click',function(){
+            
+
+        
+            // 提交后添加信息
+            // 向数组中添加病人信息
+        var already_have_patient_array = getPatientInfo();
+        var array_now_length = already_have_patient_array.length;
+        // 获取表单值
+        var treate_date = document.getElementById('BookDateInput').value;
+        var book_num = document.getElementById('BookingNumInput').value;
+        var patient_name = document.getElementById('PatientNameInput').value;
+        var birth_date = document.getElementById('PatientBirthDate').value;
+        var phone = document.getElementById('PatientPhoneInput').value;
+        var type = document.getElementById('ReceptionTypeSelect').value;
+        var department = document.getElementById('DepChooseOption').value;
+        var doctor = document.getElementById('ReceptionDoctorSelect').value;
+        var charge_status = document.getElementById('TradeFeeSelect').value;
+        if(!department.length || !type.length || !doctor.length || !charge_status.length || !patient_name.length || !birth_date.length || !phone.length){
+            alert("请将必填项（*项）填写完整");
+        }else{
+            // 添加
+            addPatientInfo(array_now_length,treate_date,book_num,patient_name,birth_date,phone,type,department,doctor,charge_status);
+            console.log(getPatientInfo());
+
+            var show_receive_code = document.createElement("img");
+            show_receive_code.id = "money_receive_code_img";
+            show_receive_code.src = "./img/receiveCode.png";
+            
+            var add_photo = document.getElementById("Info_text");
+            add_photo.appendChild(show_receive_code);
+            var add_delete_event = document.getElementById("money_receive_code_img");
+            add_delete_event.addEventListener('click',function(){
+                this.remove();
+            })
+        }
+        
+
+        })
+
+        var parent_div = document.getElementById("Info_text");
+        parent_div.appendChild(booking_num);
+        parent_div.appendChild(dep_choose);
+        parent_div.appendChild(reception_type);
+        parent_div.appendChild(reception_doctor);
+        parent_div.appendChild(trade_fee);
+        parent_div.appendChild(book_date);
+        parent_div.appendChild(patient_name);
+        parent_div.appendChild(patient_birth);
+        parent_div.appendChild(patient_phone);
+
+        
+        var need_to_set_type = document.getElementById("PatientBirthDate");
+        if(need_to_set_type){
+            need_to_set_type.setAttribute("type","date");
+            need_to_set_type.setAttribute("value","2000-01-01");
+
+            
+        }else{
+            console.log("ERROR: failed to get element id:'PatientBirthDate'");
+        }
+
+        need_to_set_type.addEventListener('change',function(){
+            var set_age_value = document.getElementById("PatientAgeInput");
+            var birth_ymd = document.getElementById("PatientBirthDate").value;
+            var birth_year = getBirthYear(birth_ymd);
+            function getBirthYear(birth_YMD){
+                var sub_to = birth_YMD.indexOf("-");
+                return birth_YMD.substring(0,sub_to);
+            }
+            var now_year = getNowYear();
+            function getNowYear(){
+                var nowDate = new Date();
+                return nowDate.getFullYear();
+            }
+            var age = now_year-birth_year;
+            var add_age = document.getElementById("PatientAgeInput");
+            window.patient_age = now_year-birth_year;
+        })
+       })
+
+
+
+
+
+
+
+
+    //    病人信息页
+    var patient_info_btn = document.getElementById('PatientInfo');
+    patient_info_btn.addEventListener('click',function(){
+        // 删除已有元素
+        var need_to_delete = document.getElementById("Info_text");
+        while(need_to_delete.children.length){
+            need_to_delete.lastElementChild.remove();
+        }
+        var change_title = document.getElementById('Info_title');
+        change_title.innerHTML = "病人信息";
+
+        //添加所需元素
+        var patient_info_parent = document.getElementById('Info_text');
+        patient_info_parent.style.width = 100 + "%";
+        patient_info_parent.style.marginLeft = 0 + "px";
+        patient_info_parent.style.paddingLeft = 0 + "px";
+        var detail_info = document.createElement("div");
+        detail_info.id = "DetailInfo";
+        
+        var row_1 = document.createElement("div");
+        row_1.id = "row_1";
+        row_1.className = "row";
+        
+        
+        // 表格标题
+        var title_date = document.createElement("div");
+        title_date.innerHTML = "就诊日期";
+        title_date.id = "date";
+        title_date.className = "one_col table_title";
+        row_1.appendChild(title_date);
+
+        var title_num = document.createElement("div");
+        title_num.innerHTML = "挂号单号";
+        title_num.id = "num";
+        title_num.className = "one_col table_title";
+        row_1.appendChild(title_num);
+
+        var title_name = document.createElement("div");
+        title_name.innerHTML = "姓名";
+        title_name.id = "name";
+        title_name.className = "one_col table_title";
+        row_1.appendChild(title_name);
+
+        var title_birth = document.createElement("div");
+        title_birth.innerHTML = "年龄";
+        title_birth.id = "birth";
+        title_birth.className = "one_col table_title";
+        row_1.appendChild(title_birth);
+
+        var title_telphone = document.createElement("div");
+        title_telphone.innerHTML = "电话";
+        title_telphone.id = "phone";
+        title_telphone.className = "one_col table_title";
+        row_1.appendChild(title_telphone);
+
+        var title_type = document.createElement("div");
+        title_type.innerHTML = "就诊类型";
+        title_type.id = "type";
+        title_type.className = "one_col table_title";
+        row_1.appendChild(title_type);
+
+        var title_department = document.createElement("div");
+        title_department.innerHTML = "科室";
+        title_department.id = "department";
+        title_department.className = "one_col table_title";
+        row_1.appendChild(title_department);
+
+        var title_doctor = document.createElement("div");
+        title_doctor.innerHTML = "医生";
+        title_doctor.id = "doctor";
+        title_doctor.className = "one_col table_title";
+        row_1.appendChild(title_doctor);
+
+        var title_status = document.createElement("div");
+        title_status.innerHTML = "缴费状态";
+        title_status.id = "status";
+        title_status.className = "one_col table_title";
+        row_1.appendChild(title_status);
+        
+        patient_info_parent.appendChild(row_1);
+
+
+
+        let row_num = 2;
+        var already_patient_info = getPatientInfo();
+        var info_lenth = already_patient_info.length;
+        console.log(already_patient_info);
+        for(let j = 0; j < info_lenth; j++){
+            var row_1 = document.createElement("div");
+            row_1.id = "row_"+row_num;
+            row_1.className = "row";
+
+            var title_date = document.createElement("div");
+            title_date.innerHTML = already_patient_info[j][0];
+            title_date.id = "date";
+            title_date.className = "one_col";
+            row_1.appendChild(title_date);
+
+            var title_num = document.createElement("div");
+            title_num.innerHTML = already_patient_info[j][1];
+            title_num.id = "num";
+            title_num.className = "one_col";
+            row_1.appendChild(title_num);
+
+            var title_name = document.createElement("div");
+            title_name.innerHTML = already_patient_info[j][2];
+            title_name.id = "name";
+            title_name.className = "one_col";
+            row_1.appendChild(title_name);
+
+            var title_birth = document.createElement("div");
+            title_birth.innerHTML = already_patient_info[j][3];
+            title_birth.id = "birth";
+            title_birth.className = "one_col";
+            row_1.appendChild(title_birth);
+
+            var title_telphone = document.createElement("div");
+            title_telphone.innerHTML = already_patient_info[j][4];
+            title_telphone.id = "phone";
+            title_telphone.className = "one_col";
+            row_1.appendChild(title_telphone);
+
+            var title_type = document.createElement("div");
+            title_type.innerHTML = already_patient_info[j][5];
+            title_type.id = "type";
+            title_type.className = "one_col";
+            row_1.appendChild(title_type);
+
+            var title_department = document.createElement("div");
+            title_department.innerHTML = already_patient_info[j][6];
+            title_department.id = "department";
+            title_department.className = "one_col";
+            row_1.appendChild(title_department);
+
+            var title_doctor = document.createElement("div");
+            title_doctor.innerHTML = already_patient_info[j][7];
+            title_doctor.id = "doctor";
+            title_doctor.className = "one_col";
+            row_1.appendChild(title_doctor);
+
+            var title_status = document.createElement("div");
+            title_status.innerHTML = already_patient_info[j][8];
+            title_status.id = "status";
+            title_status.className = "one_col";
+            row_1.appendChild(title_status);
+
+            patient_info_parent.appendChild(row_1);
+            row_num++;
+        }
+        // patient_info_parent.appendChild(detail_info);
+    })
+
+
+
+    // 病房管理
+    var ward_manage_btn = document.getElementById('WardManage');
+    ward_manage_btn.addEventListener('click',function(){
+        // 删除已有元素
+        var need_to_delete = document.getElementById("Info_text");
+        while(need_to_delete.children.length){
+            need_to_delete.lastElementChild.remove();
+        }
+        var change_title = document.getElementById('Info_title');
+        change_title.innerHTML = "病房管理";
+        // 添加元素
+        // console.log(getWardNumIndex(1002));
+        // console.log(getSpeWardPatientInfo(0));
+        // console.log(getWardNumArr());
+        var parent_div = document.getElementById('Info_text');
+        var all_ward_num_div = document.createElement("div");
+        all_ward_num_div.id = "AllWardNumDiv";
+        parent_div.appendChild(all_ward_num_div);
+        
+        // 病房号展示
+        var ward_num_arr = getWardNumArr();
+        for(let i = 0; i < ward_num_arr.length; i++){
+            let ward_num_div = document.createElement("div");
+            ward_num_div.id = "WardNumDiv"+i;
+            ward_num_div.className = "WardNumDiv";
+            ward_num_div.innerHTML = ward_num_arr[i];
+            ward_num_div.addEventListener('click',function(){
+                // 先判断最上方显示框中是否有信息，若有则删除
+                var click_num_remove_info = document.getElementById('SpeWardInfo');
+                if(click_num_remove_info){
+                    click_num_remove_info.remove();
+                }
+                // 点击病房号后显示病房内病人姓名
+                // 创建一个div块用于展示信息
+                // console.log(getSpeWardPatientInfo(getWardNumIndex(ward_num_div.innerHTML)));
+                var spe_ward_info = document.createElement("div");
+                spe_ward_info.id = "SpeWardInfo";
+                parent_div.prepend(spe_ward_info);
+
+                // 向展示框中添加详细的各床病人名字
+                let this_ward_patient = getSpeWardPatientInfo(getWardNumIndex(ward_num_div.innerHTML));
+                for(let k = 0; k < this_ward_patient.length; k++){
+                    var patient_name_div = document.createElement("div");
+                    patient_name_div.id = "PatientNameDiv"+k;
+                    patient_name_div.className = "PatientNameDiv_cls";
+                    var bed_num = k+1;
+                    patient_name_div.innerHTML = ward_num_arr[i]+"-"+ bed_num + "号床：" + this_ward_patient[k];
+                    var patient_name_add_to = document.getElementById('SpeWardInfo');
+                    patient_name_add_to.appendChild(patient_name_div);
+                }
+                
+                
+                var add_click_to_speWardInfo = document.getElementById('SpeWardInfo');
+                add_click_to_speWardInfo.addEventListener('click',function(){
+                    this.remove();
+                })
+            });
+            var ward_num_parent = document.getElementById('AllWardNumDiv');
+            ward_num_parent.appendChild(ward_num_div);
+        }
+        
+        
+
+    })
+
+    </script>
+</html>

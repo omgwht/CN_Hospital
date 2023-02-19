@@ -1,0 +1,115 @@
+body{
+    background-image: url(../img/privSysBg.png);
+    background-size: cover;
+    position: relative;
+}
+
+/* 设置左上角的两行字 */
+#inUpperLeft{
+    display: inline;
+    float: left;
+    width: 30%;
+    margin-top: 30px;
+
+}
+#data_share_center,#cn_hospital_sys{
+    font-weight: bold;
+    text-align: center;
+    font-size: 30px;
+}
+#cn_hospital_sys{
+    margin-top: 5px;
+}
+
+
+
+/* 设置中间区域蓝色背景块 */
+#center_div{
+    position: relative;
+    color: white;
+}
+#center_div_bg{
+    position: absolute;
+    background-color: rgba(16, 42, 75, 0.99);
+    height: 500px;
+    width: 65%;
+    margin-left: 18%;
+    margin-top: 6%;
+}
+
+/* 中间区域上方文字块 */
+#in_center_upper{
+    height: 50px;
+    width: 80%;
+    border: 2px solid white;
+    border-left: 0px;
+    border-right: 0px;
+    margin-left: 10%;
+    margin-top: 5%;
+}
+
+/* 左侧 */
+#in_left{
+    line-height: 50px;
+    height: 50px;
+    width: 70%;
+    border-left: 0px;
+    border-right: 2px solid white;
+    float: left;
+    overflow: hidden;
+}
+#left_text{
+    margin-left: 5%;
+    font-size: 25px;
+}
+
+/* 右侧 */
+#in_right{
+    line-height: 50px;
+    height: 50px;
+    width: 30%;
+    margin-left: 70%;
+}
+#right_text{
+    margin-left: 5%;
+    font-size: 25px;
+    overflow: hidden;
+}
+
+
+
+/* 中间区域 */
+#in_center{
+    margin-top: 3%;
+    margin-left: 10%;
+    width: 80%;
+    height: 40%;
+    font-size: 40px;
+    /* border: 2px solid wheat; */
+    overflow: hidden;
+}
+#center_text{
+    margin-left: 3%;
+    margin-top: 7%;
+}
+#jczyy_text{
+    margin-bottom: 5px;
+}
+
+
+/* 底部点击登录区域 */
+#in_bottom{
+    height: 60px;
+    width: 25%;
+    /* border: 2px solid wheat; */
+    margin-top: 3%;
+    margin-left: 65%;
+    background-image: linear-gradient(to right,#0A284B,40%,#213A5B);
+}
+#bottom_text{
+    /* border: 2px solid wheat; */
+    line-height: 60px;
+    height: 60px;
+    font-size: 25px;
+    margin-left: 35%;
+}

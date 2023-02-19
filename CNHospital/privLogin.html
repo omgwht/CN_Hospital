@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>私用系统登录</title>
+		<link type="text/css" rel="stylesheet" href="./css/privLogin.css">
+    </head>
+	<body>
+		<!-- 中间有背景区域 -->
+        <div id="center_div">
+            <div id="center_div_bg">
+                <div id="in_center_upper">
+                    <div id="in_left">
+                        <div id="left_text">中医医院智慧化建设</div>
+                    </div>
+                    <div id="in_right">
+                        <div id="right_text">Version:1.0</div>
+                    </div>
+                </div>
+
+                <div id="in_center">
+                    <div id="center_text">
+                        <!-- <form action="./js/login.js" method="post"> -->
+                            <div id="user_no">
+                                <span>账号：<span>
+                                <span><input id="userNo_input" type="text" name="user"></span>
+                            </div>
+                            <div id="password">
+                                <span>密码：</span>
+                                <span><input id="password_input" type="password" name="pwd"></span>
+                            </div>
+                            <!-- <div id="btn_submit" onclick="window.location.href='./js/privLogin.js'">
+                                <input id="input_submit" type="submit" value="登录">
+                            </div> -->
+                        <!-- </form> -->
+                    </div>
+                </div>
+
+                <div id="in_bottom">
+                    <div id="bottom_bg">
+                        <div id="bottom_text">登录</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</body>
+    <!-- <script type="module" src="./js/privLogin.js"></script> -->
+    <script>
+        var user_info = new Map([
+            ['admin','123456'],
+            ['user','123456']
+        ])
+        var longin_click = document.getElementById('in_bottom');
+        longin_click.onclick = function(){
+            var user_name = document.getElementById('userNo_input').value;
+            var user_pwd = document.getElementById('password_input').value;
+            for(var [key, value] of user_info){
+                if(user_name == key && user_pwd == value){
+                    window.location.href='./priv_hosInfo.html';
+                    return;
+                }
+            }
+            alert('账号或密码错误，登录失败');
+            return;
+        }
+    </script>
+</html>
